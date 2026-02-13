@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,6 @@ body{
     background:#0f1220;
     font-family:-apple-system,BlinkMacSystemFont,"Microsoft YaHei",sans-serif;
     color:white;
-    overflow:hidden;
 }
 
 /* 点击页 */
@@ -25,6 +24,7 @@ body{
     justify-content:center;
     font-size:20px;
     letter-spacing:2px;
+    cursor:pointer;
 }
 
 /* 信件页 */
@@ -57,6 +57,7 @@ body{
     opacity:0;
     transition:2s;
     white-space:pre-wrap;
+    pointer-events:none;
 }
 
 /* 爱心 */
@@ -86,8 +87,9 @@ body{
 <div class="ending" id="ending"></div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function(){
 
-var content = `亲爱的：
+    var content = `亲爱的：
 
 窗外起风了。
 
@@ -114,7 +116,7 @@ var content = `亲爱的：
 这些话，
 我当面说给你听。 ❤️`;
 
-var endingText = `如果有一天，
+    var endingText = `如果有一天，
 
 我们醒来时不再隔着电话。
 
@@ -130,42 +132,44 @@ var endingText = `如果有一天，
 
 都值得。 ❤️`;
 
-var i = 0;
+    var i = 0;
+    var letter = document.getElementById("letter");
+    var cover = document.getElementById("cover");
+    var ending = document.getElementById("ending");
 
-document.getElementById("cover").onclick = function(){
-    document.getElementById("cover").style.display="none";
-    document.getElementById("letter").style.display="block";
-    typeWriter();
-};
+    cover.addEventListener("click", function(){
+        cover.style.display="none";
+        letter.style.display="block";
+        typeWriter();
+    });
 
-function typeWriter(){
-    if(i < content.length){
-        document.getElementById("letter").innerHTML += content.charAt(i);
-        i++;
-        document.getElementById("letter").scrollTop =
-            document.getElementById("letter").scrollHeight;
-        setTimeout(typeWriter,30);
-    }else{
-        setTimeout(showEnding,2000);
+    function typeWriter(){
+        if(i < content.length){
+            letter.innerHTML += content.charAt(i);
+            i++;
+            letter.scrollTop = letter.scrollHeight;
+            setTimeout(typeWriter,30);
+        }else{
+            setTimeout(showEnding,2000);
+        }
     }
-}
 
-function showEnding(){
-    var end = document.getElementById("ending");
-    end.style.opacity = "1";
-    end.innerHTML = endingText;
-}
+    function showEnding(){
+        ending.style.opacity = "1";
+        ending.innerHTML = endingText;
+    }
 
-/* 轻量爱心 */
-setInterval(function(){
-    var heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="❤";
-    heart.style.left=Math.random()*100+"vw";
-    document.body.appendChild(heart);
-    setTimeout(function(){heart.remove();},6000);
-},2000);
+    /* 爱心 */
+    setInterval(function(){
+        var heart=document.createElement("div");
+        heart.className="heart";
+        heart.innerHTML="❤";
+        heart.style.left=Math.random()*100+"vw";
+        document.body.appendChild(heart);
+        setTimeout(function(){heart.remove();},6000);
+    },2000);
 
+});
 </script>
 
 </body>
